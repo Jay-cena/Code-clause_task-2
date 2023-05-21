@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Timer and Stopwatch</title>
+    <style>
+        body {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        h1 {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            color: #333;
+        }
+        
+        #timer {
+            font-size: 36px;
+        }
+        
+        #stopwatch {
+            font-size: 36px;
+            margin-top: 20px;
+        }
+        
+        button {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Timer and Stopwatch</h1>
+    <div id="timer">00:00:00</div>
+    <button onclick="startTimer()">Start Timer</button>
+    <button onclick="stopTimer()">Stop Timer</button>
+    <button onclick="resetTimer()">Reset Timer</button>
+    
+    <div id="stopwatch">00:00:00</div>
+    <button onclick="startStopwatch()">Start Stopwatch</button>
+    <button onclick="stopStopwatch()">Stop Stopwatch</button>
+    <button onclick="resetStopwatch()">Reset Stopwatch</button>
+
+    <script>
+        var timerInterval;
+        var timerTime = 0;
+        
+        var stopwatchInterval;
+        var stopwatchTime = 0;
+
+        function startTimer() {
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+        
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+        
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerTime = 0;
+            document.getElementById("timer").innerText = "00:00:00";
+        }
+
+        function updateTimer() {
+            timerTime++;
+            var hours = Math.floor(timerTime / 3600);
+            var minutes = Math.floor((timerTime % 3600) / 60);
+            var seconds = timerTime % 60;
+            
+            document.getElementById("timer").innerText = formatTime(hours) + ":" + formatTime(minutes) + ":" + formatTime(seconds);
+        }
+
+        function formatTime(time) {
+            return time.toString().padStart(2, "0");
+        }
+
+        function startStopwatch() {
+            stopwatchInterval = setInterval(updateStopwatch, 10);
+        }
+
+        function stopStopwatch() {
+            clearInterval(stopwatchInterval);
+        }
+
+        function resetStopwatch() {
+            clearInterval(stopwatchInterval);
+            stopwatchTime = 0;
+            document.getElementById("stopwatch").innerText = "00:00:00";
+        }
+
+        function updateStopwatch() {
+            stopwatchTime += 10;
+            var hours = Math.floor(stopwatchTime / 3600000);
+            var minutes = Math.floor((stopwatchTime % 3600000) / 60000);
+            var seconds = Math.floor((stopwatchTime % 60000) / 1000);
+            var milliseconds = Math.floor((stopwatchTime % 1000) / 10);
+
+            document.getElementById("stopwatch").innerText = formatTime(hours) + ":" + formatTime(minutes) + ":" + formatTime(seconds) + ":" + formatTime(milliseconds);
+        }
+    </script>
+</body>
+</html>
